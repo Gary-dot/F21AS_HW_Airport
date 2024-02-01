@@ -5,9 +5,9 @@ public class Flight {
     private final String destination;
     private final String carrier;
     private final int maxNumberOfPassengers;
-    private Baggage baggageLimit;
     private final int totalWeightLimit;
     private final int totalVolumeLimit;
+    private Baggage baggageLimit;
 
     /**
      * The flightCode is a unique identifier for the flight.
@@ -44,6 +44,10 @@ public class Flight {
      */
     public String getCarrier() {
         return carrier;
+    }
+
+    public String getDestination() {
+        return destination;
     }
 
     /**

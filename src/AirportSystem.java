@@ -15,16 +15,26 @@ public class AirportSystem {
         readFlightList(flightList);
         flightDetailsList = ReadLists.readPassengerList(passengerList, flightList);
     }
+    public PassengerList getPassengerList() {
+        return passengerList;
+    }
+
+    public FlightList getFlightList() {
+        return flightList;
+    }
     public void showGUI() {
         new ProgramGUI(passengerList, flightList, flightDetailsList).setVisible(true);
     }
-
+    public FlightDetailsList getFlightDetailsList() {
+        return flightDetailsList;
+    }
     /**
      * The main method.
-     * @param args The arguments.
+     * @param args None.
      */
     public static void main(String[] args) {
-        new AirportSystem().showGUI();
-        new SystemInterface().run();
+        AirportSystem airportSystem = new AirportSystem();
+        airportSystem.showGUI();
+        new SystemControlInterface(airportSystem.getFlightDetailsList(), airportSystem.getFlightList()).run();
     }
 }

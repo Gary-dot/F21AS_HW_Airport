@@ -37,9 +37,9 @@ public class FlightList {
      */
     public String listDetals() {
         StringBuffer sb = new StringBuffer();
+        sb.append(String.format("%-10s %-15s %-30s\n\n", "Flight", "Destination", "Airline"));
         for (Flight f : arrayList) {
-            sb.append(f.toString());
-            sb.append("\n");
+            sb.append(String.format("%-10s %-15s %-30s\n", f.getFlightCode(), f.getDestination(), f.getCarrier()));
         }
         return sb.toString();
     }
@@ -48,7 +48,23 @@ public class FlightList {
      * @return All the flight details in the order of the flight code.
      */
     public String listByFlightCode() {
-        arrayList.sort(new FlightComparator());
+        arrayList.sort(new FlightComparator(FlightComparator.FLIGHT_CODE));
+        return listDetals();
+    }
+
+    /**
+     * @return All the flight details in the order of the airline.
+     */
+    public String listByAirline() {
+        arrayList.sort(new FlightComparator(FlightComparator.AIRLINE));
+        return listDetals();
+    }
+
+    /**
+     * @return All the flight details in the order of the destination.
+     */
+    public String listByDestination() {
+        arrayList.sort(new FlightComparator(FlightComparator.DESTINATION));
         return listDetals();
     }
 

@@ -1,6 +1,7 @@
 package GUI;
 
 import Algorithm.PenaltyRule;
+import DataStructure.Exceptions.FlightNotFoundException;
 import DataStructure.Exceptions.WrongBaggageSizeFormatException;
 import DataStructure.*;
 import GUI.Panels.*;
@@ -20,6 +21,7 @@ public class ProgramGUI extends JFrame {
     private final BaggageNoticePanel baggageNoticePanel;
     private final BaggageCheckPanel baggageCheckPanel;
     private final ShowPenaltyPanel showPenaltyPanel;
+    private final FlightInquiryPanel flightInquiryPanel;
     private PassengerList passengerList;
     private FlightList flightList;
     private FlightDetailsList flightDetailsList;
@@ -51,6 +53,7 @@ public class ProgramGUI extends JFrame {
         baggageNoticePanel = new BaggageNoticePanel();
         baggageCheckPanel = new BaggageCheckPanel();
         showPenaltyPanel = new ShowPenaltyPanel();
+        flightInquiryPanel = new FlightInquiryPanel();
 
         cardPanel.add(welcomePanel, "Welcome");
         cardPanel.add(checkInPanel, "CheckIn");
@@ -60,6 +63,7 @@ public class ProgramGUI extends JFrame {
         cardPanel.add(baggageNoticePanel, "BaggageNotice");
         cardPanel.add(baggageCheckPanel, "BaggageCheck");
         cardPanel.add(showPenaltyPanel, "ShowPenalty");
+        cardPanel.add(flightInquiryPanel, "FlightInquiry");
 
         welcomePanel.getCheckInButton().addActionListener(e -> {
             checkInPanel.clearTextFields();
@@ -67,7 +71,7 @@ public class ProgramGUI extends JFrame {
         });
 
         welcomePanel.getFlightInquiryButton().addActionListener(e -> {
-            cl.show(cardPanel, "CheckIn");
+            cl.show(cardPanel, "FlightInquiry");
         });
 
         checkInPanel.getQuitButton().addActionListener(e -> {
@@ -134,12 +138,33 @@ public class ProgramGUI extends JFrame {
             }
         });
         showPenaltyPanel.getPayButton().addActionListener(e -> {
+
             passenger.setCheckedIn(true);
+
             cl.show(cardPanel, "Success");
         });
         showPenaltyPanel.getBackButton().addActionListener(e -> {
             cl.show(cardPanel, "BaggageCheck");
         });
+        flightInquiryPanel.getBackButton().addActionListener(e -> {
+            cl.show(cardPanel, "Welcome");
+        });
+        flightInquiryPanel.getListByFlight().addActionListener(e -> {
+            flightInquiryPanel.getDisplayList().setText(flightList.listByFlightCode());
+        });
+        flightInquiryPanel.getListByDestination().addActionListener(e -> {
+            flightInquiryPanel.getDisplayList().setText(flightList.listByAirline());
+        });
+        flightInquiryPanel.getSearchButton().addActionListener(e -> {
+            String flightCode = flightInquiryPanel.getSearchField().getText();
+            try {
+                Flight flight = flightList.findByFlightCode(flightCode);
+                flightInquiryPanel.getResult().setText(String.format("%s  %s  %s", flight.getFlightCode(), flight.getDestination(), flight.getCarrier()));
+            } catch (FlightNotFoundException ex) {
+                flightInquiryPanel.getResult().setText("Flight not found!");
+            }
+        });
+
         add(cardPanel);
         setResizable(false);
     }

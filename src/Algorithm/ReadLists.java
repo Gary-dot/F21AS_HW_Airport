@@ -15,7 +15,7 @@ public class ReadLists {
         String[] fData;
         int lineCount = 0;
         try {
-            buff = new BufferedReader(new FileReader("FlightList.txt"));
+            buff = new BufferedReader(new FileReader(".\\input\\FlightList.txt"));
             String inputLine = buff.readLine();  //read first line
             while (inputLine != null) {
                 lineCount++;
@@ -97,7 +97,7 @@ public class ReadLists {
         String[] pData;
         int lineCount = 0;
         try {
-            buff = new BufferedReader(new FileReader("PassengerList.txt"));
+            buff = new BufferedReader(new FileReader(".\\input\\PassengerList.txt"));
             String inputLine = buff.readLine();  //read first line
             while (inputLine != null) {
                 lineCount++;

@@ -10,7 +10,7 @@ public class AlreadyCheckedInPanel extends JPanel{
     }
     public AlreadyCheckedInPanel() {
         setLayout(null);
-        JLabel successLabel = new JLabel("You cannot check in twice!");
+        JLabel successLabel = new JLabel("You have already checked in!");
         successLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 24));
         successLabel.setBounds(40, 60, 350, 60);
 

@@ -18,6 +18,15 @@ public class FlightDetails implements Comparable<FlightDetails>{
         this.weightExcess = false;
         this.volumeExcess = false;
     }
+    public int getTotalWeight() {
+        return totalWeight;
+    }
+    public int getTotalVolume() {
+        return totalVolume;
+    }
+    public int getTotalExcessFee() {
+        return totalExcessFee;
+    }
     public String getFlightCode() {
         return flightCode;
     }
@@ -42,6 +51,7 @@ public class FlightDetails implements Comparable<FlightDetails>{
         this.totalWeight += p.getBaggage().getWeight();
         this.totalVolume += p.getBaggage().getVolume();
         this.totalExcessFee += p.getPenalty()[2];
+
     }
 
     @Override
@@ -51,6 +61,6 @@ public class FlightDetails implements Comparable<FlightDetails>{
 
     @Override
     public String toString() {
-        return String.format("%-10s%-10d%-10d%-10d%-10d%-10s%-10s", this.flightCode, this.passengerNumber, this.totalWeight, this.totalVolume, this.totalExcessFee, this.weightExcess, this.volumeExcess);
+        return String.format("%-15s%-15d%-15d%-15d%-15d%-15s%-15s", this.flightCode, this.passengerNumber, this.totalWeight, this.totalVolume, this.totalExcessFee, this.weightExcess? "Yes": "No", this.volumeExcess? "Yes": "No");
     }
 }

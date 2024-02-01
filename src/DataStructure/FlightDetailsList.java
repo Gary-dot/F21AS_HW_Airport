@@ -14,6 +14,10 @@ public class FlightDetailsList {
         this.flightDetailsList = new ArrayList<>();
     }
 
+    public ArrayList<FlightDetails> getFlightDetailsList() {
+        return flightDetailsList;
+    }
+
     public void addDetails(FlightDetails f) {
         // if the flight code is not in the map
         if (flightDetailsMap.put(f.getFlightCode(), f) == null) {
