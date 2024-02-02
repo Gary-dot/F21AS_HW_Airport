@@ -1,6 +1,7 @@
 package GUI;
 
 import Algorithm.PenaltyRule;
+import Algorithm.ReferenceCodeRule;
 import DataStructure.Exceptions.FlightNotFoundException;
 import DataStructure.Exceptions.WrongBaggageSizeFormatException;
 import DataStructure.*;
@@ -81,6 +82,11 @@ public class ProgramGUI extends JFrame {
         checkInPanel.getSubmitButton().addActionListener(e -> {
             String referenceNumber = checkInPanel.getReferenceNumberField().getText();
             String lastName = checkInPanel.getLastNameField().getText();
+            if(!ReferenceCodeRule.checkReferenceCodeValidity(referenceNumber)){
+                JOptionPane.showMessageDialog(checkInPanel, "Invalid reference code!");
+                return;
+            }
+
             int status = passengerList.checkIn(referenceNumber, lastName);
             if (status == PassengerList.PASSENGER_NOT_FOUND) {
                 cl.show(cardPanel, "Fail");

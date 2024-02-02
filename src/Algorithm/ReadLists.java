@@ -111,6 +111,10 @@ public class ReadLists {
                     System.out.printf("Line %d: Invalid passenger data: %s%n", lineCount, inputLine);
                     continue;
                 }
+                if (!ReferenceCodeRule.checkReferenceCodeValidity(pData[0])) {
+                    System.out.printf("Line %d: Invalid reference code: %s%n", lineCount, pData[0]);
+                    continue;
+                }
                 int c = Integer.parseInt(pData[4].trim());
                 if (c < 0 || c > 1) {
                     System.out.printf("Line %d: Invalid check-in status: %s%n", lineCount, pData[4]);
