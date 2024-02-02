@@ -2,8 +2,7 @@ package GUI;
 
 import Algorithm.PenaltyRule;
 import Algorithm.ReferenceCodeRule;
-import DataStructure.Exceptions.FlightNotFoundException;
-import DataStructure.Exceptions.WrongBaggageSizeFormatException;
+import DataStructure.Exceptions.*;
 import DataStructure.*;
 import GUI.Panels.*;
 
@@ -28,6 +27,8 @@ public class ProgramGUI extends JFrame {
     private FlightDetailsList flightDetailsList;
     private Passenger passenger;
     private Flight flight;
+    public static final int SCREEN_WIDTH = 400;
+    public static final int SCREEN_HEIGHT = 400;
 
     public ProgramGUI(PassengerList passengerList, FlightList flightList, FlightDetailsList flightDetailsList) {
         this.passengerList = passengerList;
@@ -38,8 +39,8 @@ public class ProgramGUI extends JFrame {
         Dimension screenSize = kit.getScreenSize();
         int width = screenSize.width;
         int height = screenSize.height;
-        int x = (width - 400) / 2;
-        int y = (height - 400) / 2;
+        int x = (width - SCREEN_WIDTH) / 2;
+        int y = (height - SCREEN_HEIGHT) / 2;
         setLocation(x, y);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(400, 400);
