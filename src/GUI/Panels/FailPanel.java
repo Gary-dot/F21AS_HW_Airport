@@ -7,12 +7,6 @@ public class FailPanel extends JPanel {
     private JButton QuitButton;
     private JButton ReenterButton;
 
-    public JButton getQuitButton() {
-        return QuitButton;
-    }
-    public JButton getReenterButton() {
-        return ReenterButton;
-    }
     public FailPanel() {
         setLayout(null);
         JLabel successLabel = new JLabel("Wrong Reference Number or Lastname!");
@@ -32,19 +26,14 @@ public class FailPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setTitle("Airport System");
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-        int x = (width - 400) / 2;
-        int y = (height - 400) / 2;
-        testFrame.setLocation(x, y);
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setSize(400, 400);
-        testFrame.add(new FailPanel());
-        testFrame.setVisible(true);
-        testFrame.setResizable(false);
+        new TestFrame(new FailPanel()).setVisible(true);
+    }
+
+    public JButton getQuitButton() {
+        return QuitButton;
+    }
+
+    public JButton getReenterButton() {
+        return ReenterButton;
     }
 }

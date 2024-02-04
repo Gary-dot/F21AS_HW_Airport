@@ -89,21 +89,9 @@ public class BaggageCheckPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setTitle("Airport System");
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-        int x = (width - 400) / 2;
-        int y = (height - 400) / 2;
-        testFrame.setLocation(x, y);
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setSize(400, 400);
         BaggageCheckPanel baggageCheckPanel = new BaggageCheckPanel();
-        testFrame.add(baggageCheckPanel);
+        TestFrame testFrame = new TestFrame(baggageCheckPanel);
         testFrame.setVisible(true);
-        testFrame.setResizable(false);
         baggageCheckPanel.getSubmitButton().addActionListener(e -> {
             try {
                 baggageCheckPanel.getBaggage();

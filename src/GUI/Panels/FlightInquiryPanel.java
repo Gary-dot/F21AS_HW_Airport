@@ -63,20 +63,7 @@ public class FlightInquiryPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setTitle("Airport System");
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-        int x = (width - 400) / 2;
-        int y = (height - 400) / 2;
-        testFrame.setLocation(x, y);
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setSize(400, 400);
-        testFrame.add(new FlightInquiryPanel());
-        testFrame.setVisible(true);
-        testFrame.setResizable(false);
+        new TestFrame(new FlightInquiryPanel()).setVisible(true);
     }
 
     public JTextField getSearchField() {
@@ -103,14 +90,6 @@ public class FlightInquiryPanel extends JPanel {
         this.result = result;
     }
 
-    public JButton getListByFlight() {
-        return listByFlight;
-    }
-
-    public void setListByFlight(JButton listByFlight) {
-        this.listByFlight = listByFlight;
-    }
-
 //    public JButton getListByAirline() {
 //        return listByAirline;
 //    }
@@ -118,6 +97,14 @@ public class FlightInquiryPanel extends JPanel {
 //    public void setListByAirline(JButton listByAirline) {
 //        this.listByAirline = listByAirline;
 //    }
+
+    public JButton getListByFlight() {
+        return listByFlight;
+    }
+
+    public void setListByFlight(JButton listByFlight) {
+        this.listByFlight = listByFlight;
+    }
 
     public JButton getListByDestination() {
         return listByDestination;

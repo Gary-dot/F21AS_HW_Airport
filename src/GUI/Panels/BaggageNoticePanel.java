@@ -6,7 +6,8 @@ import java.awt.*;
 public class BaggageNoticePanel extends JPanel {
     private JButton nextButton;
     private JButton quitButton;
-    public BaggageNoticePanel(){
+
+    public BaggageNoticePanel() {
         setLayout(null);
         JLabel notice = new JLabel("<html>You will then enter your baggage details,<br>" +
                 "including length, width, height, and weight.<br>" +
@@ -30,26 +31,16 @@ public class BaggageNoticePanel extends JPanel {
         add(nextButton);
         add(quitButton);
     }
+
+    public static void main(String[] args) {
+        new TestFrame(new BaggageNoticePanel()).setVisible(true);
+    }
+
     public JButton getNextButton() {
         return nextButton;
     }
+
     public JButton getQuitButton() {
         return quitButton;
-    }
-    public static void main(String[] args) {
-        JFrame testFrame = new JFrame();
-        testFrame.setTitle("Airport System");
-        Toolkit kit = Toolkit.getDefaultToolkit();
-        Dimension screenSize = kit.getScreenSize();
-        int width = screenSize.width;
-        int height = screenSize.height;
-        int x = (width - 400) / 2;
-        int y = (height - 400) / 2;
-        testFrame.setLocation(x, y);
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setSize(400, 400);
-        testFrame.add(new BaggageNoticePanel());
-        testFrame.setVisible(true);
-        testFrame.setResizable(false);
     }
 }
