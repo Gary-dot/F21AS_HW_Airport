@@ -5,7 +5,7 @@ import DataStructure.Exceptions.WrongBaggageSizeFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+// This is main.
 public class DataStructureTest {
     /**
      * Test the Baggage class and WrongBaggageSizeFormatException class.
