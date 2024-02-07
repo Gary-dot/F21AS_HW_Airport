@@ -160,7 +160,7 @@ public class ProgramGUI extends JFrame {
             flightInquiryPanel.getDisplayList().setText(flightList.listByFlightCode());
         });
         flightInquiryPanel.getListByDestination().addActionListener(e -> {
-            flightInquiryPanel.getDisplayList().setText(flightList.listByAirline());
+            flightInquiryPanel.getDisplayList().setText(flightList.listByDestination());
         });
         flightInquiryPanel.getSearchButton().addActionListener(e -> {
             String flightCode = flightInquiryPanel.getSearchField().getText();
