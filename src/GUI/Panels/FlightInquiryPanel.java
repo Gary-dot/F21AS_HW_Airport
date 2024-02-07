@@ -34,15 +34,14 @@ public class FlightInquiryPanel extends JPanel {
         //set up south panel containing 2 previous areas
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new GridLayout(2, 1));
-        southPanel.add(result);
         southPanel.add(searchPanel);
-
+        southPanel.add(result);
 
         //add north panel containing some buttons
         JPanel northPanel = new JPanel(new GridLayout(1, 4));
         listByFlight = new JButton("List By Flight");
 //        listByAirline = new JButton("List By Airline");
-        listByDestination = new JButton("List By Destination");
+        listByDestination = new JButton("List By Dest.");
         backButton = new JButton("Back");
 //        northPanel.add(backButton);
         northPanel.add(listByFlight);
