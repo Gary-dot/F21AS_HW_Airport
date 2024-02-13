@@ -6,7 +6,7 @@ import DataStructure.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
+// This is main.
 public class AlgorithmsTest {
     /**
      * Test the calculateExcessPenalty method in PenaltyRule class.

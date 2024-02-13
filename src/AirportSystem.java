@@ -18,7 +18,6 @@ public class AirportSystem {
     public PassengerList getPassengerList() {
         return passengerList;
     }
-
     public FlightList getFlightList() {
         return flightList;
     }

@@ -4,7 +4,7 @@ Flight         Passenger      Total Weight   Total Volume   Total Fee      Weigh
 
 CA890          1              31             1936           0              No             No             
 HU160          2              62             7000           120            No             No             
-HU509          1              500000         6000           12498830       Yes            No             
+HU509          1              500000         30000          12499220       Yes            No             
 CZ178          1              45             3072           30             No             No             
 MU360          1              17             3520           20             No             No             
 HU351          0              0              0              0              No             No             

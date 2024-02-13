@@ -33,13 +33,13 @@ public class SystemControlInterface {
                 generateReport();
                 exit(0);
             }
-        } while (!(command.equals("quit") || command.equals("q")));
+        } while (true);
     }
 
     /**
      * Update the flight details list by checking if the total weight and total volume of each flight
      */
-    public void updateFlightDetailsList() {
+    private void updateFlightDetailsList() {
         if (flightDetailsList != null) {
             for (FlightDetails fd : flightDetailsList.getFlightDetailsList()) {
                 int totalWeight = fd.getTotalWeight();
