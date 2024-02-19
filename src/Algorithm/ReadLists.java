@@ -51,20 +51,20 @@ public class ReadLists {
                 try {
                     weightLimit = Integer.parseInt(fData[5].trim());
                 } catch (NumberFormatException nfe) {
-                    System.out.println(fData[0] + ": Weight limit not a number :" + fData[6]);
+                    System.out.println(fData[0] + ": Weight limit not a number :" + fData[5]);
                 }
 
                 int maxBaggageWeight = 0;
                 try {
                     maxBaggageWeight = Integer.parseInt(fData[6].trim());
                 } catch (NumberFormatException nfe) {
-                    System.out.println(fData[0] + ": Max baggage weight not a number :" + fData[3]);
+                    System.out.println(fData[0] + ": Max baggage weight not a number :" + fData[6]);
                 }
                 int maxBaggageVolume = 0;
                 try {
                     maxBaggageVolume = Integer.parseInt(fData[7].trim());
                 } catch (NumberFormatException nfe) {
-                    System.out.println(fData[0] + ": Max baggage volume not a number :" + fData[4]);
+                    System.out.println(fData[0] + ": Max baggage volume not a number :" + fData[7]);
                 }
                 //create Flight object
                 Baggage baggageLimit = new Baggage(volumeLimit[0], volumeLimit[1], volumeLimit[2], weightLimit);

@@ -2,10 +2,21 @@ package JUnitTest;
 
 import DataStructure.Baggage;
 import DataStructure.Exceptions.WrongBaggageSizeFormatException;
-import org.junit.jupiter.api.Test;
+//JUnit 4
+//import org.junit.Test;
+//import static org.junit.Assert.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+//JUnit 5, including
+//@Test: This annotation denotes that a method is a test method.
+//@BeforeEach: This annotation denotes that the annotated method will be executed before each test method.
+//@AfterEach: This annotation denotes that the annotated method will be executed after each test method.
+//@BeforeAll: This annotation denotes that the annotated method will be executed before all test methods in the current class.
+//@AfterAll: This annotation denotes that the annotated method will be executed after all test methods in the current class.
+import DataStructure.Baggage;
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
 // This is main.
+
 public class DataStructureTest {
     /**
      * Test the Baggage class and WrongBaggageSizeFormatException class.
@@ -18,7 +29,6 @@ public class DataStructureTest {
         assertEquals(9, baggage.getHeight());
         assertEquals(50, baggage.getWeight());
         assertEquals(2772, baggage.getVolume());
-
         try {
             new Baggage(27, 10, 14, 60); //length > width, but width < height
         } catch (WrongBaggageSizeFormatException e) {

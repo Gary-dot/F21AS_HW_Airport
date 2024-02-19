@@ -22,11 +22,12 @@ public class AirportSystem {
         return flightList;
     }
     public void showGUI() {
-        new ProgramGUI(passengerList, flightList, flightDetailsList).setVisible(true);
+        new ProgramGUI(passengerList, flightList, flightDetailsList).run();
     }
     public FlightDetailsList getFlightDetailsList() {
         return flightDetailsList;
     }
+
     /**
      * The main method.
      * @param args None.
