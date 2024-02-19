@@ -1,4 +1,5 @@
-ORD7557;Johnson;John;HU509;0
+Reference Code;Last Name;First Name;Flight Number;Checked-In Status;Baggage Dimensions;Baggage Weight
+ORD7557;Johnson;John;HU509;0;
 ORD2033;Davis;Richard;CA137;1;25x18x12;30
 ORD3380;Wilson;William;ZH941;1;23x18x10;27
 ORD5022;Johnson;Joseph;MU360;1;22x16x10;17

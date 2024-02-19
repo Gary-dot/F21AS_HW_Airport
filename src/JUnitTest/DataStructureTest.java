@@ -14,6 +14,7 @@ import DataStructure.Exceptions.WrongBaggageSizeFormatException;
 //@AfterAll: This annotation denotes that the annotated method will be executed after all test methods in the current class.
 import DataStructure.Baggage;
 import org.junit.jupiter.api.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 // This is main.
 

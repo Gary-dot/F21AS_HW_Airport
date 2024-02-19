@@ -1,3 +1,4 @@
+Flight;Destination;Airline;Passengers;Baggage Volume;Seats;Max Weight; Max Volume
 CA890;Beijing;Air China;224;23x14x11;52;42469;7985088
 HU160;Shanghai;Hainan Airlines;268;23x14x11;52;46953;2455488
 HU509;Guangzhou;Hainan Airlines;176;23x14x11;52;30388;3350592
