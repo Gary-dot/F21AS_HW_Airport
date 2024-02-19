@@ -20,7 +20,7 @@ public class FlightComparator implements Comparator<Flight> {
             case FLIGHT_CODE -> f1.getFlightCode().compareTo(f2.getFlightCode());
             case AIRLINE -> f1.getCarrier().compareTo(f2.getCarrier());
             case DESTINATION -> f1.getDestination().compareTo(f2.getDestination());
-            default -> throw new IllegalArgumentException("Invalid type.");
+            default -> throw new IllegalArgumentException("Invalid compare type.");
         };
     }
 }

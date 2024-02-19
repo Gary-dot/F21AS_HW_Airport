@@ -13,15 +13,15 @@ import java.awt.*;
  * The main GUI for the program.
  */
 public class ProgramGUI extends JFrame {
-    private final WelcomePanel welcomePanel;
-    private final CheckInPanel checkInPanel;
-    private final SuccessPanel successPanel;
-    private final FailPanel failPanel;
-    private final AlreadyCheckedInPanel alreadyCheckedInPanel;
-    private final BaggageNoticePanel baggageNoticePanel;
-    private final BaggageCheckPanel baggageCheckPanel;
-    private final ShowPenaltyPanel showPenaltyPanel;
-    private final FlightInquiryPanel flightInquiryPanel;
+    private WelcomePanel welcomePanel;
+    private  CheckInPanel checkInPanel;
+    private  SuccessPanel successPanel;
+    private  FailPanel failPanel;
+    private  AlreadyCheckedInPanel alreadyCheckedInPanel;
+    private  BaggageNoticePanel baggageNoticePanel;
+    private  BaggageCheckPanel baggageCheckPanel;
+    private  ShowPenaltyPanel showPenaltyPanel;
+    private  FlightInquiryPanel flightInquiryPanel;
     private PassengerList passengerList;
     private FlightList flightList;
     private FlightDetailsList flightDetailsList;
@@ -30,10 +30,22 @@ public class ProgramGUI extends JFrame {
     public static final int SCREEN_WIDTH = 400;
     public static final int SCREEN_HEIGHT = 400;
 
+    /**
+     * Create a new ProgramGUI.
+     * @param passengerList The passenger list.
+     * @param flightList The flight list.
+     * @param flightDetailsList The flight details list.
+     */
     public ProgramGUI(PassengerList passengerList, FlightList flightList, FlightDetailsList flightDetailsList) {
         this.passengerList = passengerList;
         this.flightList = flightList;
         this.flightDetailsList = flightDetailsList;
+    }
+
+    /**
+     * Run the GUI.
+     */
+    public void run(){
         setTitle("Airport System");
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
@@ -171,8 +183,8 @@ public class ProgramGUI extends JFrame {
                 flightInquiryPanel.getResult().setText("Flight not found!");
             }
         });
-
         add(cardPanel);
         setResizable(false);
+        setVisible(true);
     }
 }
