@@ -83,9 +83,6 @@ public class EventBoardPanel extends JPanel {
         for(Flight f : flights) {
             upcomingFlights.add(new UpcomingFlight(f, f.getDepartureTime().minusHours(2)));
         }
-
-
-
         noticeBoardTextArea.append("A new day begins!\n");
         // Create a timer to update the time every second
         timer = new Timer(1000, e -> {
@@ -97,9 +94,10 @@ public class EventBoardPanel extends JPanel {
                 virtualTime = virtualTime.plusMinutes(1);
             }
             timeLabel.setText(virtualTime.toString());
-            if (virtualTime.equals(upcomingFlights.get(idx2.get()).getCheckInTime())) {
-                String flightCode = upcomingFlights.getFirst().getFlight().getFlightCode();
-                String destination = upcomingFlights.getFirst().getFlight().getDestination();
+            UpcomingFlight uf = upcomingFlights.get(idx2.get());
+            if (virtualTime.equals(uf.getCheckInTime())) {
+                String flightCode = uf.getFlight().getFlightCode();
+                String destination = uf.getFlight().getDestination();
                 String s = String.format("Flight %s(%s) is ready for check-in at %s.\n", flightCode, destination, virtualTime.toString());
                 noticeBoardTextArea.append(s);
                 LogGenerator.getInstance().addLog(s);
@@ -109,9 +107,10 @@ public class EventBoardPanel extends JPanel {
                     idx2.set(0);
                 }
             }
-            if (virtualTime.equals(flights.get(idx1.get()).getDepartureTime())) {
-                String flightCode = flights.get(idx1.get()).getFlightCode();
-                String destination = flights.get(idx1.get()).getDestination();
+            Flight f = flights.get(idx1.get());
+            if (virtualTime.equals(f.getDepartureTime())) {
+                String flightCode = f.getFlightCode();
+                String destination = f.getDestination();
                 String s = String.format("Flight %s(%s) is ready to depart at %s.\n", flightCode, destination, virtualTime.toString());
                 noticeBoardTextArea.append(s);
                 LogGenerator.getInstance().addLog(s);
@@ -130,7 +129,6 @@ public class EventBoardPanel extends JPanel {
     public Timer getTimer() {
         return timer;
     }
-
     public JButton getExitButton() {
         return exitButton;
     }
