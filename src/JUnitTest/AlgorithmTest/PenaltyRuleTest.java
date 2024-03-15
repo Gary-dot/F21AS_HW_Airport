@@ -27,7 +27,6 @@ public class PenaltyRuleTest {
     @Test
     public void penaltyRuleTest() {
         Baggage passengerBag = new Baggage(30, 15, 15, 50);
-        // 使用Flight类的构造方法实例化一个Flight对象
         int[] result = PenaltyRule.calculateExcessPenalty(flight, passengerBag);
 
         assertEquals(110, result[0], "Size excess penalty calculation is incorrect");
