@@ -10,9 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ListReaderTest {
     private final Path testFilePath = Paths.get("./input/test/TestFlightList.txt");
 
+    /**
+     * test if list can be read correctly
+     */
     @Test
     void testReadFlightListWithPath() {
-        // 通过测试文件路径创建FlightList实例
+        // with the new Constructor
         FlightList flightList = new FlightList(testFilePath.toString());
         // 验证是否正确读取了航班信息
         assertEquals(2, flightList.size());
