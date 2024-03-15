@@ -1,6 +1,6 @@
 import DataStructure.*;
-import GUI.ProgramGUI;
 import Algorithm.*;
+import GUI.*;
 
 import static Algorithm.ReadLists.readFlightList;
 
@@ -22,7 +22,7 @@ public class AirportSystem {
         return flightList;
     }
     public void showGUI() {
-        new ProgramGUI(passengerList, flightList, flightDetailsList).run();
+//        new ProgramGUI(passengerList, flightList, flightDetailsList).run();
     }
     public FlightDetailsList getFlightDetailsList() {
         return flightDetailsList;

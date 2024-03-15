@@ -1,9 +1,11 @@
-CA890;Beijing;Air China;224;23x14x11;52;42469;7985088
-HU160;Shanghai;Hainan Airlines;268;23x14x11;52;46953;2455488
-HU509;Guangzhou;Hainan Airlines;176;23x14x11;52;30388;3350592
-CZ178;Shenzhen;China Southern Airlines;254;23x14x11;52;32990;5158080
-MU360;Chengdu;China Eastern Airlines;228;23x14x11;52;20629;6272640
-HU351;Xi'an;Hainan Airlines;288;23x14x11;52;36737;4145472
+Flight;Destination;Airline;Passengers;Baggage Volume;Seats;Max Weight; Max Volume; Departure Time(Check-in Time is always 2 hours before departure time)
+The simulation will run between 06:00 and 12:00.
+CA890;Beijing;Air China;224;23x14x11;52;42469;7985088;08:00
+HU160;Shanghai;Hainan Airlines;268;23x14x11;52;46953;2455488;08:10
+HU509;Guangzhou;Hainan Airlines;176;23x14x11;52;30388;3350592:08:20
+CZ178;Shenzhen;China Southern Airlines;254;23x14x11;52;32990;5158080:10:00
+MU360;Chengdu;China Eastern Airlines;228;23x14x11;52;20629;6272640:10:10
+HU351;Xi'an;Hainan Airlines;288;23x14x11;52;36737;4145472:
 ZH941;Hangzhou;Shenzhen Airlines;197;23x14x11;52;24650;2928960
 CA635;Chongqing;Air China;253;23x14x11;52;23506;8152704
 CA137;Wuhan;Air China;211;23x14x11;52;39276;4065984

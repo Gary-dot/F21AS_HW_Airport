@@ -181,5 +181,4 @@ public class ReadLists {
         readFlightList(flightList);
         return readPassengerList(passengerList, flightList);
     }
-
 }
