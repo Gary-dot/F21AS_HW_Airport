@@ -15,7 +15,7 @@ import model.DataStructure.Exceptions.*;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DataStructureTest {
+public class BaggageTest {
     /**
      * Test the Baggage class and WrongBaggageSizeFormatException class.
      */
