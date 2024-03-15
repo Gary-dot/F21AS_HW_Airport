@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.time.LocalTime;
 
 public class ListReader {
-    public static void readFlightList(FlightList flightList) {
+    public static void readFlightList(FlightList flightList, String path) {
         BufferedReader buff = null;
         String[] fData;
         int lineCount = 0;
         try {
-            buff = new BufferedReader(new FileReader(".\\input\\FlightList.txt"));
+            buff = new BufferedReader(new FileReader(path));
             String inputLine;  //read first line
             while (true) {
                 //read next line
