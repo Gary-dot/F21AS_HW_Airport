@@ -3,10 +3,9 @@ package JUnitTest.AlgorithmTest;
 import model.Algorithm.PenaltyRule;
 import model.DataStructure.Baggage;
 import model.DataStructure.Flight;
-import org.junit.jupiter.api.*;
-
 import java.time.LocalTime;
 
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PenaltyRuleTest {
