@@ -15,8 +15,12 @@ public class LogGeneratorTest {
     void setUp() {
         logGenerator = LogGenerator.getInstance();
     }
+
+    /**
+     * Test if the report is generated correctly.
+     */
     @Test
-    void testGenerateLogFile() {
+    void generateLogFileTest() {
         logGenerator.addLog("This is a test log message.");
 
         // 生成日志文件
