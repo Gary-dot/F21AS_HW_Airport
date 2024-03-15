@@ -4,7 +4,20 @@ import DataStructure.Baggage;
 import DataStructure.Exceptions.WrongBaggageSizeFormatException;
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertEquals;
+=======
+//JUnit 5, including
+//@Test: This annotation denotes that a method is a test method.
+//@BeforeEach: This annotation denotes that the annotated method will be executed before each test method.
+//@AfterEach: This annotation denotes that the annotated method will be executed after each test method.
+//@BeforeAll: This annotation denotes that the annotated method will be executed before all test methods in the current class.
+//@AfterAll: This annotation denotes that the annotated method will be executed after all test methods in the current class.
+import DataStructure.Baggage;
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.*;
+>>>>>>> 7a25851 (Optimize the function for reading files so that the program won't stop even if it reads a line of invalid information.)
 // This is main.
 public class DataStructureTest {
     /**
