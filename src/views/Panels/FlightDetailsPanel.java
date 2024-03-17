@@ -1,6 +1,7 @@
 package views.Panels;
 
 import interfaces.Observer;
+import model.DataStructure.FlightDetails;
 import model.DataStructure.FlightDetailsList;
 
 import javax.swing.*;
@@ -14,11 +15,33 @@ import static views.ProgramGUI.titleFont;
  */
 public class FlightDetailsPanel extends JPanel implements Observer {
     private static final FlightDetailsPanel instance = new FlightDetailsPanel();
-
-    private final JTextArea flightDetailsTextArea;
+    private final JPanel flightDetailsPanel;
+    class FlightDetailsComponent extends JPanel implements Observer{
+        private final JLabel flightTextLabel;
+        public FlightDetailsComponent(FlightDetails flightDetails) {
+            setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            if(flightDetails == null) {
+                flightTextLabel = new JLabel("No flight details available");
+                add(flightTextLabel);
+                return;
+            }
+            flightDetails.registerObserver(this); // register as an observer
+            flightTextLabel = new JLabel(flightDetails.toString());
+            flightTextLabel.setFont(new Font("Monospaced", Font.BOLD, 18));
+            add(flightTextLabel);
+            this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));//limit size to one row in scrollpanel
+            this.setToolTipText(String.format("The excess fee for this flight is: £%d", flightDetails.getTotalExcessFee()));
+        }
+        @Override
+        public void update() {
+            flightTextLabel.setText(FlightDetailsList.getInstance().toString());
+        }
+    }
 
     private FlightDetailsPanel() {
-        setBorder(BorderFactory.createTitledBorder(null, "Flight Details", TitledBorder.CENTER, TitledBorder.BELOW_TOP, titleFont));
+        FlightDetailsList.getInstance().registerObserver(this); // register as an observer
+
+        setBorder(BorderFactory.createTitledBorder(null, "Flight Details", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, titleFont));
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -29,15 +52,18 @@ public class FlightDetailsPanel extends JPanel implements Observer {
         label.setFont(new Font("Arial", Font.BOLD, 20));
         add(label, gbc);
 
-        flightDetailsTextArea = new JTextArea();
-        flightDetailsTextArea.setFont(new Font("Monospaced", Font.BOLD, 18));
+        flightDetailsPanel = new JPanel();
+        flightDetailsPanel.setLayout(new BoxLayout(flightDetailsPanel, BoxLayout.PAGE_AXIS)); // set layout
+        JScrollPane scrollPane = new JScrollPane(flightDetailsPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+//        flightDetailsTextArea = new JTextArea();
+//        flightDetailsTextArea.setFont(new Font("Monospaced", Font.BOLD, 18));
 //        flightDetailsTextArea.setText(String.format(" %-22s%-11s%-9s%s\n", "Flight(Destination)", "20/115", "10.1%", "%20.1%"));
-        flightDetailsTextArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(flightDetailsTextArea);
+//        flightDetailsTextArea.setEditable(false);
         gbc.weighty = 1;
 //        gbc.fill = GridBagConstraints.BOTH;
         add(scrollPane, gbc);
-        FlightDetailsList.getInstance().registerObserver(this);
     }
 
     public static FlightDetailsPanel getInstance() {
@@ -45,6 +71,12 @@ public class FlightDetailsPanel extends JPanel implements Observer {
     }
     @Override
     public synchronized void update() {
-        flightDetailsTextArea.setText(FlightDetailsList.getInstance().toString());
+        flightDetailsPanel.removeAll();
+        for (FlightDetails flightDetails : FlightDetailsList.getInstance().getFlightDetailsList()) {
+            FlightDetailsComponent flightDetailsComponent = new FlightDetailsComponent(flightDetails);
+            flightDetailsPanel.add(flightDetailsComponent);
+        }
+        flightDetailsPanel.revalidate();
+        flightDetailsPanel.repaint();
     }
 }

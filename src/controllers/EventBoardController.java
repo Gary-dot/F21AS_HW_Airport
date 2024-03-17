@@ -1,6 +1,7 @@
 package controllers;
 
 import model.Algorithm.LogGenerator;
+import model.Algorithm.PassengerGenerator;
 import views.Panels.EventBoardPanel;
 
 import javax.swing.*;
@@ -18,19 +19,19 @@ public class EventBoardController {
             if (speedButton.getText().equals("  x1  ")) {
                 speedButton.setText("  x2  ");
                 timer.setDelay(500);
-
+                PassengerGenerator.getInstance().setDelay(500);
             } else if (speedButton.getText().equals("  x2  ")) {
                 speedButton.setText("  x4  ");
                 timer.setDelay(250);
-
+                PassengerGenerator.getInstance().setDelay(250);
             } else if (speedButton.getText().equals("  x4  ")) {
                 speedButton.setText("  x8  ");
                 timer.setDelay(125);
-
+                PassengerGenerator.getInstance().setDelay(125);
             } else {
                 speedButton.setText("  x1  ");
                 timer.setDelay(1000);
-
+                PassengerGenerator.getInstance().setDelay(1000);
             }
         });
 
@@ -38,9 +39,11 @@ public class EventBoardController {
             if (pauseButton.getText().equals("Pause")) {
                 pauseButton.setText("Resume");
                 timer.stop();
+                PassengerGenerator.getInstance().stop();
             } else {
                 pauseButton.setText("Pause");
                 timer.start();
+                PassengerGenerator.getInstance().resume();
             }
         });
 

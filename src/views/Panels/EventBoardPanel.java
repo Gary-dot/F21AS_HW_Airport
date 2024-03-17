@@ -3,6 +3,7 @@ package views.Panels;
 
 import main.AirportSystem;
 import model.Algorithm.LogGenerator;
+import model.Algorithm.PassengerGenerator;
 import model.DataStructure.*;
 
 import javax.swing.*;
@@ -16,6 +17,9 @@ import static views.ProgramGUI.titleFont;
 
 public class EventBoardPanel extends JPanel {
     private static LocalTime virtualTime = LocalTime.of(6, 0, 0); // Start at midnight
+    public static LocalTime getVirtualTime() {
+        return virtualTime;
+    }
     private static final EventBoardPanel instance = new EventBoardPanel();
     private final JButton speedButton;
     private final JButton pauseButton;
@@ -28,7 +32,8 @@ public class EventBoardPanel extends JPanel {
     }
     private EventBoardPanel() {
         //    private FlightDetailsList flightDetailsList;
-        setBorder(BorderFactory.createTitledBorder(null, "Event Board", TitledBorder.CENTER, TitledBorder.BELOW_TOP, titleFont));
+        setBorder(BorderFactory.createTitledBorder(null, "Event Board", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, titleFont));
+
         GridBagLayout gbl = new GridBagLayout();
         setLayout(gbl);
         speedButton = new JButton("  x1  ");
@@ -44,7 +49,7 @@ public class EventBoardPanel extends JPanel {
         JLabel t1 = new JLabel("(hh:mm)");
         t1.setFont(new Font("Arial", Font.BOLD, 20)); // Set the font size of the title
         timeLabel = new JLabel(virtualTime.toString());
-        timeLabel.setFont(new Font("Arial", Font.BOLD, 40)); // Set the font size of the clock
+        timeLabel.setFont(new Font("Arial", Font.BOLD, 30)); // Set the font size of the clock
         add(timeLabel, gbc);
         add(t1, gbc);
 
@@ -67,6 +72,7 @@ public class EventBoardPanel extends JPanel {
         noticeBoardTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
         JScrollPane scrollPane = new JScrollPane(noticeBoardTextArea);
         noticeBoardTextArea.setEditable(false);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         add(scrollPane, gbc);
 
         // Get some variables from ProgramGUI
@@ -76,6 +82,8 @@ public class EventBoardPanel extends JPanel {
         ArrayList<Flight> flights = FlightList.getInstance().getArrayList();
         AtomicInteger idx1 = new AtomicInteger(0);
         AtomicInteger idx2 = new AtomicInteger(0);
+        LogGenerator lg = LogGenerator.getInstance();
+        WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
 
         // Always check in 2 hours before the flight
 //        Flight firstFlight = flights.get(idx2.getAndIncrement());
@@ -100,9 +108,13 @@ public class EventBoardPanel extends JPanel {
                 String destination = uf.getFlight().getDestination();
                 String s = String.format("Flight %s(%s) is ready for check-in at %s.\n", flightCode, destination, virtualTime.toString());
                 noticeBoardTextArea.append(s);
-                LogGenerator.getInstance().addLog(s);
+                lg.addLog(s);
                 FlightDetails fd = new FlightDetails(upcomingFlights.get(idx2.get()).getFlight());
                 flightDetailsList.addDetails(fd);
+
+                PassengerList pl = PassengerGenerator.generatePassengers(fd);
+                waitingQueuePanel.appendWaitingQueue(pl);
+
                 if (idx2.incrementAndGet() == flights.size()) {
                     idx2.set(0);
                 }
@@ -113,10 +125,15 @@ public class EventBoardPanel extends JPanel {
                 String destination = f.getDestination();
                 String s = String.format("Flight %s(%s) is ready to depart at %s.\n", flightCode, destination, virtualTime.toString());
                 noticeBoardTextArea.append(s);
-                LogGenerator.getInstance().addLog(s);
-                flightDetailsList.removeDetails(flightCode);
+                lg.addLog(s);
+                flightDetailsList.removeFirst();
                 if (flightDetailsList.size() == 0) {
                     noticeBoardTextArea.append("All flights have departed.\n");
+                    // For the rest of the passengers in the waiting queue, they have missed the flight.
+                    for(Passenger p: waitingQueuePanel.getWaitingQueue().getPassengerList()){
+                        lg.addLog(String.format("No.%-4d %s: Failed to check in!\nThe flight has already departed!\n", p.getIdx(), p.getFlightCode()));
+                    }
+                    waitingQueuePanel.getWaitingQueue().clear();
                 }
 //                System.out.println(flightDetailsList);
                 if (idx1.incrementAndGet() == flights.size()) {

@@ -1,7 +1,5 @@
 package model.Algorithm;
 
-
-
 import model.DataStructure.*;
 
 import java.io.BufferedReader;

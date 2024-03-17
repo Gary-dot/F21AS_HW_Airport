@@ -4,6 +4,8 @@ import controllers.*;
 import views.Panels.*;
 
 import java.awt.*;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 
 public class ProgramGUI extends JFrame {
@@ -15,16 +17,19 @@ public class ProgramGUI extends JFrame {
     public static int CenterY;
     public static final int SCREEN_WIDTH = 1200;
     public static final int SCREEN_HEIGHT = 800;
-    public static final Font titleFont = new Font("Arial", Font.BOLD, 30);
+    public static final Font titleFont = new Font("Arial", Font.BOLD, 20);
+    private static final AtomicInteger idx3 = new AtomicInteger(1);
+    public static AtomicInteger getIdx3() {
+        return idx3;
+    }
 
     public ProgramGUI() {
         // Create the main frame
         setTitle("Airport Check-In System");
-        setLayout(new GridLayout(2, 2)); // Divide the frame into 4 sections
-
+        setLayout(new GridLayout(2,2)); // Divide the frame into 4 sections
         // Create panels
         eventBoardPanel = EventBoardPanel.getInstance();
-        waitingQueuePanel = new WaitingQueuePanel();
+        waitingQueuePanel = WaitingQueuePanel.getInstance();
         deskDetailsPanel = new DeskDetailsPanel();
         flightDetailsPanel = FlightDetailsPanel.getInstance();
 
@@ -32,16 +37,17 @@ public class ProgramGUI extends JFrame {
         new EventBoardController(eventBoardPanel);
 
         // Add panels to frame
-        add(waitingQueuePanel);
-        add(eventBoardPanel);
-        add(deskDetailsPanel);
         add(flightDetailsPanel);
+        add(eventBoardPanel);
+
+        add(waitingQueuePanel);
+        add(deskDetailsPanel);
 
         // Pack and set visible
         pack();
         setSize(SCREEN_WIDTH,SCREEN_HEIGHT); // You can adjust the size as needed
         setVisible(true);
-        setResizable(false);
+//        setResizable(false);
 
         // Set Location
         Toolkit kit = Toolkit.getDefaultToolkit();
@@ -54,6 +60,7 @@ public class ProgramGUI extends JFrame {
     }
 
     public static void main(String[] args) {
+        Locale.setDefault(Locale.UK);
         new ProgramGUI();
     }
 }

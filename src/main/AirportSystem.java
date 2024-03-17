@@ -1,5 +1,6 @@
 package main;
 
+import model.Algorithm.PassengerGenerator;
 import views.*;
 import java.util.Locale;
 public class AirportSystem {
@@ -8,11 +9,16 @@ public class AirportSystem {
         new ProgramGUI();
     }
 
+    public void run() {
+        Thread t = new Thread(PassengerGenerator.getInstance());
+        t.start();
+    }
+
     /**
      * The main method.
      * @param args None.
      */
     public static void main(String[] args) {
-        new AirportSystem();
+        new AirportSystem().run();
     }
 }

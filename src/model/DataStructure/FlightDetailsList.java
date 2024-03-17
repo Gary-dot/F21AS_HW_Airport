@@ -74,8 +74,14 @@ public class FlightDetailsList implements Subject {
         notifyObservers();
     }
 
-    public synchronized FlightDetails getByCode(String flightCode) {
-        return flightDetailsMap.get(flightCode);
+    public void removeFirst() {
+        synchronized (this) {
+            if (!flightDetailsList.isEmpty()) {
+                flightDetailsMap.remove(flightDetailsList.getFirst().getFlightCode());
+                flightDetailsList.removeFirst();
+            }
+        }
+        notifyObservers();
     }
 
 //    public void updateDetails(Passenger p) throws FlightNotFoundException {
