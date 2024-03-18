@@ -16,6 +16,9 @@ public class PassengerTest {
         passenger = new Passenger("GB233", "Doe", "John", "FL123", true, baggage, penalty);
     }
 
+    /**
+     * make sure passenger info can be printed correctly
+     */
     @Test
     public void printPassengerTest() {
         // System.out.println(passenger.printPassenger());

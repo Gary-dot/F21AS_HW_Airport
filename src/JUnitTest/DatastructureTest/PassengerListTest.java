@@ -8,10 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PassengerListTest {
 
     private PassengerList passengerList;
-    private FlightDetailsList flightDetailsList;
+
     @BeforeEach
     public void setUp(){
-        flightDetailsList = FlightDetailsList.getInstance();
+        FlightDetailsList flightDetailsList = FlightDetailsList.getInstance();
         passengerList = new PassengerList();
 
         Baggage baggageLimit = new Baggage(20, 15, 12, 50);
@@ -20,6 +20,9 @@ public class PassengerListTest {
         flightDetailsList.addDetails(flightDetails);
     }
 
+    /**
+     * make sure can add a random passenger to the list
+     */
     @Test
     void addARandomPassengerIncreasesListSizeTest() {
         int initialSize = passengerList.size();
