@@ -40,18 +40,15 @@ public class WaitingQueuePanel extends JPanel {
 
     public void appendWaitingQueues(PassengerList passengerList) {
         for (Passenger p : passengerList.getPassengerList()) {
-            synchronized (waitingQueues) { // synchronize the access to the waitingQueue
-                p.setIdx(ProgramGUI.getIdx3().getAndIncrement());
-                // A passenger has 20% chance to go to the business class and 80% chance to go to the economic class
-                if (Math.random() < 0.2) {
-                    waitingQueues[1].add(p);
-                } else {
-                    waitingQueues[0].add(p);
-                }
+            p.setIdx(ProgramGUI.getIdx3().getAndIncrement());
+            // A passenger has 20% chance to go to the business class and 80% chance to go to the economic class
+            if (Math.random() < 0.2) {
+                waitingQueues[1].add(p);
+            } else {
+                waitingQueues[0].add(p);
             }
             String message = String.format("No.%-4d %s: %s %s has been added to the waiting queue at %s.\n", p.getIdx(), p.getReferenceCode(), p.getFirstName(), p.getLastName(), EventBoardPanel.getVirtualTime());
             LogGenerator.getInstance().addLog(message);
-
         }
     }
 
