@@ -43,7 +43,14 @@ public class Desk implements Runnable, Subject {
     @Override
     public void run() {
         WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
-        PassengerList waitingQueue = waitingQueuePanel.getWaitingQueue();
+        // The counters will first deal with the business class passengers, then the economic class passengers.
+        PassengerList[] waitingQueues = waitingQueuePanel.getWaitingQueues();
+        PassengerList waitingQueue;
+        if( waitingQueues[1].size() > 0) {
+            waitingQueue = waitingQueues[1];
+        } else {
+            waitingQueue = waitingQueues[0];
+        }
         while (isRunning) {
             synchronized (lock) {
                 if (stop) {

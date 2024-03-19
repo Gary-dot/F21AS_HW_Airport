@@ -49,22 +49,26 @@ public class ControlTool extends JFrame {
         panel.add(deleteDeskButton);
 
         WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
-        PassengerList wl = waitingQueuePanel.getWaitingQueue();
-        DeskDetailsPanel deskDetailsPanel = DeskDetailsPanel.getInstance();
+        PassengerList[] passengerLists = waitingQueuePanel.getWaitingQueues();
 
         clearPassengerButton.addActionListener(e -> {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all passengers?", "Clear all passengers", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
-                for(Passenger p: wl.getPassengerList()){
-                    String text = String.format("No.%-4d %s: Failed to check in at %s!\nYou removed this passenger!", p.getIdx(), p.getFlightCode(), EventBoardPanel.getVirtualTime());
-                    LogGenerator.getInstance().addLog(text);
+                // For all passengers in both waiting queues, generate a log and remove them
+                for(PassengerList wl: passengerLists){
+                    for(Passenger p: wl.getPassengerList()){
+                        String text = String.format("No.%-4d %s: Failed to check in at %s!\nYou removed this passenger!", p.getIdx(), p.getFlightCode(), EventBoardPanel.getVirtualTime());
+                        LogGenerator.getInstance().addLog(text);
+                    }
+                    // clear all passengers
+                    wl.clear();
                 }
-                // clear all passengers
-                wl.clear();
             }
         });
 
         addPassengerButton.addActionListener(e -> {
+            // A random passenger will have 20% chance to go to the business class and 80% chance to go to the economic class
+            PassengerList wl = passengerLists[(Math.random() < 0.2) ? 1 : 0];
             wl.addARandomPassenger();
         });
 

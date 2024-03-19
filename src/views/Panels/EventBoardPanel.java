@@ -90,7 +90,7 @@ public class EventBoardPanel extends JPanel {
                 flightDetailsList.addDetails(fd);
                 deskList.addDesk();
                 PassengerList pl = PassengerGenerator.generatePassengers(fd);
-                waitingQueuePanel.appendWaitingQueue(pl);
+                waitingQueuePanel.appendWaitingQueues(pl);
 
                 if (idx2.incrementAndGet() == flights.size()) {
                     idx2.set(0);
@@ -107,11 +107,16 @@ public class EventBoardPanel extends JPanel {
                 deskList.removeDesk();
                 if (flightDetailsList.size() == 0) {
                     noticeBoardTextArea.append("The airport is closed!\n");
-                    // For the rest of the passengers in the waiting queue, they have missed the flight.
-                    for (Passenger p : waitingQueuePanel.getWaitingQueue().getPassengerList()) {
-                        lg.addLog(String.format("No.%-4d %s: Failed to check in!\nThe flight has already departed!\n", p.getIdx(), p.getFlightCode()));
+                    // For the rest of the passengers in the waiting queues, they have missed the flight.
+                    for(PassengerList pl : waitingQueuePanel.getWaitingQueues()) {
+                        for (Passenger p : pl.getPassengerList()) {
+                            lg.addLog(String.format("No.%-4d %s: Failed to check in!\nThe flight has already departed!\n", p.getIdx(), p.getFlightCode()));
+                        }
                     }
-                    waitingQueuePanel.getWaitingQueue().clear();
+                    // Clear the waiting queues
+                    for (PassengerList pl : waitingQueuePanel.getWaitingQueues()) {
+                        pl.clear();
+                    }
                 }
 //                System.out.println(flightDetailsList);
                 if (idx1.incrementAndGet() == flights.size()) {

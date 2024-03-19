@@ -180,7 +180,7 @@ public class PassengerGenerator implements Runnable {
         FlightDetailsList flightDetailsList = FlightDetailsList.getInstance();
         while (isRunning) {
             PassengerList pl = generatePassengers(flightDetailsList);
-            waitingQueuePanel.appendWaitingQueue(pl);
+            waitingQueuePanel.appendWaitingQueues(pl);
             try {
                 Thread.sleep(delay);
             } catch (InterruptedException e) {
