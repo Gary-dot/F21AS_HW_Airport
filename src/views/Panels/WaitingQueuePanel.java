@@ -25,13 +25,10 @@ public class WaitingQueuePanel extends JPanel {
         setBorder(waitingQueueBorder);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        EconomicClassPanel economicClassPanel = new EconomicClassPanel(waitingQueues[0]);
-        BusinessClassPanel businessClassPanel = new BusinessClassPanel(waitingQueues[1]);
-
+        QueuePanel economicClassPanel = new QueuePanel(waitingQueues[0], "Economic Class");
+        QueuePanel businessClassPanel = new QueuePanel(waitingQueues[1], "Business Class");
         add(economicClassPanel);
         add(businessClassPanel);
-
-
     }
 
     public static WaitingQueuePanel getInstance() {
@@ -58,16 +55,16 @@ public class WaitingQueuePanel extends JPanel {
         }
     }
 
-    private class EconomicClassPanel extends JPanel implements Observer {
+    private class QueuePanel extends JPanel implements Observer {
         private final JLabel label;
         private final JTextArea queueTextArea;
         private final PassengerList waitingQueue;
 
-        public EconomicClassPanel(PassengerList waitingQueue) {
+        public QueuePanel(PassengerList waitingQueue, String title) {
             this.waitingQueue = waitingQueue;
             waitingQueue.registerObserver(this); // register as an observer
             setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-            setBorder(BorderFactory.createTitledBorder(null, "Economic Class", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, subtitleFront));
+            setBorder(BorderFactory.createTitledBorder(null, title, TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, subtitleFront));
             label = new JLabel("   There are currently 0 passenger(s) waiting...      ");
             label.setFont(subtitleFront);
             label.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -92,37 +89,4 @@ public class WaitingQueuePanel extends JPanel {
         }
     }
 
-    public class BusinessClassPanel extends JPanel implements Observer {
-        private final JLabel label;
-        private final JTextArea queueTextArea;
-        private final PassengerList waitingQueue;
-
-        public BusinessClassPanel(PassengerList waitingQueue) {
-            this.waitingQueue = waitingQueue;
-            waitingQueue.registerObserver(this); // register as an observer
-            setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-            setBorder(BorderFactory.createTitledBorder(null, "Business Class", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, titleFont));
-            label = new JLabel("   There are currently 0 passenger(s) waiting...      ");
-            label.setFont(subtitleFront);
-            label.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-            add(label);
-            queueTextArea = new JTextArea();
-            queueTextArea.setFont(new Font("Monospaced", Font.BOLD, 16));
-            queueTextArea.setEditable(false);
-            JScrollPane scrollPane = new JScrollPane(queueTextArea);
-            add(scrollPane);
-            scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        }
-
-        @Override
-        public void update() {
-            // update label
-            label.setText(String.format("   There are currently %d passenger(s) waiting...   ", waitingQueue.size()));
-            // update TextArea
-            String s = waitingQueue.toString();
-            synchronized (queueTextArea) {
-                queueTextArea.setText(s);
-            }
-        }
-    }
 }
