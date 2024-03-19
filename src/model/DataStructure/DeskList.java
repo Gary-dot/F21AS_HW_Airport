@@ -1,73 +1,67 @@
-package DataStructure;
+package model.DataStructure;
 
-import GUI.Frames.InfoDisplay;
-import GUI.Panels.DeskDetailsPanel;
-import GUI.Panels.FlightDetailsPanel;
-import GUI.Panels.WaitingQueuePanel;
-import GUI.ProgramGUI;
+import interfaces.Observer;
+import interfaces.Subject;
 
 import java.util.ArrayList;
 
-public class DeskList {
+public class DeskList implements Subject {
+    private static final DeskList instance = new DeskList();
     private final ArrayList<Desk> deskList;
-    private boolean stop;
+    public static DeskList getInstance() {
+        return instance;
+    }
     private int speed;
 
-    public DeskList() {
+    private DeskList() {
         deskList = new ArrayList<>();
-        this.stop = false;
-        this.speed = 1;
+        speed = 1;
     }
 
-    public synchronized void addDesk() {
-        Desk d = new Desk(deskList.size() + 1);
-        deskList.add(d);
-        new Thread(d).start();
-        d.setSpeed(speed);
-        if(stop){
-            d.stop();
+    public void addDesk() {
+        synchronized(this){
+            Desk d = new Desk(deskList.size() + 1);
+            deskList.add(d);
+            new Thread(d).start();
+            d.setDelay(speed);
         }
+        notifyObservers();
     }
 
-    public synchronized void removeDesk() {
-        Desk d = deskList.removeLast();
-        d.close();
+    public void removeDesk() {
+        synchronized(this){
+            if (deskList.isEmpty()) {
+                return;
+            }
+            Desk d = deskList.removeLast();
+            d.close();
+        }
+        notifyObservers();
     }
 
-    public synchronized void setSpeed(int speed){
-        this.speed = speed;
+    public synchronized void setSpeed(int s){
+        speed = s;
         for (Desk d : deskList) {
-            d.setSpeed(speed);
+            d.setDelay(speed);
         }
     }
 
     public synchronized void stopAll(){
-        this.stop = true;
         for (Desk d : deskList) {
             d.stop();
         }
     }
 
     public synchronized void resumeAll(){
-        this.stop = false;
         for (Desk d : deskList) {
             d.resume();
-        }
-        WaitingQueuePanel waitingQueuePanel = ProgramGUI.getWaitingQueuePanel();
-        synchronized (waitingQueuePanel) {
-            waitingQueuePanel.notifyAll();
         }
     }
 
     public synchronized int size() {
         return deskList.size();
     }
-    public synchronized void clearDesks() {
-        while (!deskList.isEmpty()) {
-            removeDesk();
-        }
-        ProgramGUI.getDeskDetailsPanel().updateText();
-    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -77,5 +71,24 @@ public class DeskList {
         return sb.toString();
     }
 
+    private Observer observer;
+    @Override
+    public void registerObserver(Observer obs) {
+        observer = obs;
+    }
 
+    @Override
+    public void removeObserver(Observer obs) {
+        observer = null;
+    }
+
+    @Override
+    public void notifyObservers() {
+        if (observer != null) {
+            observer.update();
+        }
+    }
+    public ArrayList<Desk> getArrayList() {
+        return deskList;
+    }
 }

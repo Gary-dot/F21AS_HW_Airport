@@ -1,7 +1,8 @@
 package main;
 
 import model.Algorithm.PassengerGenerator;
-import views.*;
+import views.Frames.ProgramGUI;
+
 import java.util.Locale;
 public class AirportSystem {
     public AirportSystem() {

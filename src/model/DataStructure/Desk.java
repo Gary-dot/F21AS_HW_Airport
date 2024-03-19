@@ -1,31 +1,35 @@
-package DataStructure;
+package model.DataStructure;
 
-import GUI.Frames.InfoDisplay;
-import GUI.Panels.DeskDetailsPanel;
-import GUI.Panels.EventBoardPanel;
-import GUI.Panels.FlightDetailsPanel;
-import GUI.Panels.WaitingQueuePanel;
-import GUI.ProgramGUI;
-import Main.AirportSystem;
 
-public class Desk implements Runnable {
-    private int speed = 1;
-    private boolean stop = false;
+import interfaces.Observer;
+import interfaces.Subject;
+import model.Algorithm.LogGenerator;
+import views.Panels.*;
+
+public class Desk implements Runnable, Subject {
+    private int speed;
+    private boolean stop;
     private final int id;
     private boolean isRunning;
     private Passenger p;
+    private final Object lock = new Object();
 
     public Desk(int id) {
         this.isRunning = true;
+        this.stop = true;
         this.id = id;
+        this.speed = 1;
     }
 
     public synchronized void resume() {
         stop = false;
+        synchronized (lock) {
+            lock.notifyAll();
+        }
     }
 
-    public synchronized void setSpeed(int speed) {
-        this.speed = speed;
+    public synchronized void setDelay(int delay) {
+        this.speed = delay;
     }
 
     public synchronized void stop() {
@@ -38,32 +42,25 @@ public class Desk implements Runnable {
 
     @Override
     public void run() {
-        WaitingQueuePanel waitingQueuePanel = ProgramGUI.getWaitingQueuePanel();
-        PassengerList waitingQueue = WaitingQueuePanel.getWaitingQueue();
-        DeskDetailsPanel deskDetailsPanel = ProgramGUI.getDeskDetailsPanel();
-        FlightDetailsPanel flightDetailsPanel = ProgramGUI.getFlightDetailsPanel();
-        InfoDisplay infoDisplay = ProgramGUI.getInfoDisplay();
+        WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
+        PassengerList waitingQueue = waitingQueuePanel.getWaitingQueue();
         while (isRunning) {
-            synchronized (waitingQueuePanel) {
+            synchronized (lock) {
                 if (stop) {
                     try {
-                        waitingQueuePanel.wait();
+                        lock.wait();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                 }
-                if (waitingQueue.size() > 0) {
-                    p = waitingQueue.removeFirst();
-                    waitingQueuePanel.updateText();
-                } else {
-                    p = null;
-                }
             }
-            deskDetailsPanel.updateText();
+            p = waitingQueue.removeFirst();
+            notifyObservers();
+//            deskDetailsPanel.updateText();
             // Generate a random number
             int time = (int) (Math.random() * 500 + 750);
             try {
-                Thread.sleep(time / speed);
+                Thread.sleep(time/speed);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,35 +68,46 @@ public class Desk implements Runnable {
             // Add the passenger to the FlightDetails, if the passenger is not late for the flight.
             if (p != null) {
                 String s;
-                FlightDetails fd = ProgramGUI.getFlightDetailsList().getByCode(p.getFlightCode());
+                FlightDetails fd = FlightDetailsList.getInstance().getByCode(p.getFlightCode());
                 if (fd != null) {
                     fd.addPassenger(p);
-                    flightDetailsPanel.updateTextArea();
                     // Update display
-                    s = String.format("No.%-4d %s: Successfully check in at %s.", p.getIdx(), p.getReferenceCode(), EventBoardPanel.getVirtualTime().toString());
+                    s = String.format("No.%-4d %s: Successfully check in at %s.\n", p.getIdx(), p.getReferenceCode(), EventBoardPanel.getVirtualTime().toString());
                 } else {
                     // Update display
-                    s = String.format("No.%-4d %s: Failed to check in at %s!\nThe flight has already departed!", p.getIdx(), p.getReferenceCode(), EventBoardPanel.getVirtualTime().toString());
+                    s = String.format("No.%-4d %s: Failed to check in at %s!\nThe flight has already departed!\n", p.getIdx(), p.getReferenceCode(), EventBoardPanel.getVirtualTime().toString());
                 }
-                infoDisplay.appendText(s);
-                AirportSystem.log(s);
+                LogGenerator.getInstance().addLog(s);
             }
         }
-        deskDetailsPanel.updateText();
     }
-
     @Override
     public String toString() {
         if (p == null) {
-            return String.format("Desk %d: \nNo passenger is being served.\n\n", id);
+            return String.format("Desk %d: \nNo passenger is being served.\n", id);
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Desk %d: \n%s %-12s %-12s (%s %s)\n", id, p.getReferenceCode(), p.getFirstName(), p.getLastName(), p.getFlightCode(), p.getBaggage().printBaggage()));
+        sb.append(String.format("Desk %d: \n%s %-12s %-12s (%s)\n", id, p.getFlightCode(), p.getFirstName(), p.getLastName(), p.getBaggage().printBaggage()));
         if (p.getPenalty()[2] == 0) {
-            sb.append("No baggage fee is charged.\n\n");
+            sb.append("No baggage fee is charged.\n");
         } else {
-            sb.append(String.format("A baggage fee is charged: %d£\n\n", p.getPenalty()[2]));
+            sb.append(String.format("A baggage fee is charged: %d£\n", p.getPenalty()[2]));
         }
         return sb.toString();
+    }
+    private Observer obs;
+    @Override
+    public void registerObserver(Observer obs) {
+        this.obs = obs;
+    }
+
+    @Override
+    public void removeObserver(Observer obs) {
+        this.obs = null;
+    }
+
+    @Override
+    public void notifyObservers() {
+        obs.update();
     }
 }

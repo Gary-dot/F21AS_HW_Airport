@@ -1,4 +1,4 @@
-package views;
+package views.Frames;
 
 import controllers.*;
 import views.Panels.*;

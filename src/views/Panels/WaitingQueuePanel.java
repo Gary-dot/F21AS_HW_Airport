@@ -2,18 +2,14 @@ package views.Panels;
 
 import interfaces.Observer;
 import model.Algorithm.LogGenerator;
-import model.Algorithm.PassengerGenerator;
 import model.DataStructure.*;
-import views.ProgramGUI;
+import views.Frames.ProgramGUI;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import static views.ProgramGUI.titleFont;
+import static views.Frames.ProgramGUI.titleFont;
 
 public class WaitingQueuePanel extends JPanel implements Observer {
     private static final WaitingQueuePanel instance = new WaitingQueuePanel();
@@ -30,25 +26,20 @@ public class WaitingQueuePanel extends JPanel implements Observer {
 
         TitledBorder waitingQueueBorder = BorderFactory.createTitledBorder(null, "Waiting Queue", TitledBorder.CENTER, TitledBorder.DEFAULT_JUSTIFICATION, titleFont);
         setBorder(waitingQueueBorder);
-        setLayout(new GridBagLayout());
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
         label = new JLabel("   There are currently 0 passenger(s) waiting...      ");
-        label.setFont(new Font("Arial", Font.BOLD, 25));
-        add(label, gbc);
+        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        add(label);
 
         queueTextArea = new JTextArea();
-        queueTextArea.setFont(new Font("Monospaced", Font.BOLD, 17));
+        queueTextArea.setFont(new Font("Monospaced", Font.BOLD, 16));
 //        queueTextArea.setText(String.format("No.1 %-10s %-9s %-10s %s\n", PassengerGenerator.generateRandomReferenceCode(), PassengerGenerator.generateRandomName(), PassengerGenerator.generateRandomName(), PassengerGenerator.generateRandomBaggage().printBaggage()));
         queueTextArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(queueTextArea);
-        gbc.weighty = 1;
 //        gbc.fill = GridBagConstraints.BOTH;
-        add(scrollPane, gbc);
+        add(scrollPane);
     }
     public PassengerList getWaitingQueue() {
         return waitingQueue;
@@ -59,21 +50,19 @@ public class WaitingQueuePanel extends JPanel implements Observer {
                 p.setIdx(ProgramGUI.getIdx3().getAndIncrement());
                 waitingQueue.add(p);
             }
-            String message = String.format("No.%-4d %s: %s %s has been added to the waiting queue.", p.getIdx(), p.getReferenceCode(), p.getFirstName(), p.getLastName());
+            String message = String.format("No.%-4d %s: %s %s has been added to the waiting queue at %s.\n", p.getIdx(), p.getReferenceCode(), p.getFirstName(), p.getLastName(), EventBoardPanel.getVirtualTime());
             LogGenerator.getInstance().addLog(message);
 
         }
     }
     @Override
-    public synchronized void update() {
-        // update TextArea
-        StringBuilder sb = new StringBuilder();
-        List<Passenger> copyList = new ArrayList<>(waitingQueue.getPassengerList());
-        for(Passenger p : copyList) {
-            sb.append(String.format("No.%-4d %-10s %-9s %-10s %s\n", p.getIdx(), p.getReferenceCode(), p.getFirstName(), p.getLastName(), p.getBaggage().printBaggage()));
-        }
-        queueTextArea.setText(sb.toString());
+    public void update() {
         // update label
         label.setText(String.format("   There are currently %-3d passenger(s) waiting...   ", waitingQueue.size()));
+        // update TextArea
+        String s = waitingQueue.toString();
+        synchronized (queueTextArea) {
+            queueTextArea.setText(s);
+        }
     }
 }

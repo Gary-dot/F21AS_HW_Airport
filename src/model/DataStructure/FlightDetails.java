@@ -39,7 +39,7 @@ public class FlightDetails implements Subject {
         return flightCode;
     }
 
-    public void addPassenger(Passenger p) {
+    public synchronized void addPassenger(Passenger p) {
         this.passengerNumber++;
         this.totalWeight += p.getBaggage().getWeight();
         this.totalVolume += p.getBaggage().getVolume();
@@ -48,7 +48,7 @@ public class FlightDetails implements Subject {
     }
     @Override
     public String toString() {
-        return String.format(" %-22s%-11s%-4.2f%%    %-4.2f%%\n", this.flightCode + "(" + this.flight.getDestination() + ")", this.passengerNumber + "/" + flight.getMaxNumberOfPassengers(), this.totalWeight / flight.getTotalWeightLimit() * 100.0, this.totalVolume / flight.getTotalVolumeLimit() * 100.0);
+        return String.format("  %-22s%-12s%-4.2f%%   %-4.2f%%", this.flightCode + "(" + this.flight.getDestination() + ")", this.passengerNumber + "/" + flight.getMaxNumberOfPassengers(), this.totalWeight / flight.getTotalWeightLimit() * 100.0, this.totalVolume / flight.getTotalVolumeLimit() * 100.0);
     }
     private Observer obs;
 
