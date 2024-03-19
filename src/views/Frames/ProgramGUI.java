@@ -9,10 +9,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 
 public class ProgramGUI extends JFrame {
-    private DeskDetailsPanel deskDetailsPanel;
-    private FlightDetailsPanel flightDetailsPanel;
-    private EventBoardPanel eventBoardPanel;
-    private WaitingQueuePanel waitingQueuePanel;
     public static int CenterX;
     public static int CenterY;
     public static final int SCREEN_WIDTH = 1200;
@@ -28,17 +24,22 @@ public class ProgramGUI extends JFrame {
         setTitle("Airport Check-In System");
         setLayout(new GridLayout(2,2)); // Divide the frame into 4 sections
         // Create panels
-        eventBoardPanel = EventBoardPanel.getInstance();
-        waitingQueuePanel = WaitingQueuePanel.getInstance();
-        deskDetailsPanel = new DeskDetailsPanel();
-        flightDetailsPanel = FlightDetailsPanel.getInstance();
+        ControlPanel controlPanel = ControlPanel.getInstance();
+        EventBoardPanel eventBoardPanel = EventBoardPanel.getInstance();
+        WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
+        DeskDetailsPanel deskDetailsPanel = new DeskDetailsPanel();
+        FlightDetailsPanel flightDetailsPanel = FlightDetailsPanel.getInstance();
 
+        JPanel summaryPanel = new JPanel();
+        summaryPanel.setLayout(new BoxLayout(summaryPanel, BoxLayout.PAGE_AXIS));
+        summaryPanel.add(controlPanel);
+        summaryPanel.add(eventBoardPanel);
         // Add controllers to panels
-        new EventBoardController(eventBoardPanel);
+        new Controllers();
 
         // Add panels to frame
         add(flightDetailsPanel);
-        add(eventBoardPanel);
+        add(summaryPanel);
 
         add(waitingQueuePanel);
         add(deskDetailsPanel);
