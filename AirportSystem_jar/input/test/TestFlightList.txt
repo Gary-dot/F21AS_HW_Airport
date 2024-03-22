@@ -1,0 +1,4 @@
+Flight;Destination;Airline;Passengers;Baggage Volume;Weight Limit;Max Weight; Max Volume; Departure Time(Check-in Time is always 2 hours before departure time)
+
+MU123;ChengduShenzhen;China Eastern Airlines;128;25x20x18;52;6062;927264;14:30
+CZ333;;China Southern Airlines;154;25x20x18;52;6299;915808;09:00

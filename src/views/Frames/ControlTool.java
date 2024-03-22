@@ -12,6 +12,7 @@ import views.Panels.WaitingQueuePanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class ControlTool extends JFrame {
     private static ControlTool instance;
@@ -51,7 +52,7 @@ public class ControlTool extends JFrame {
         WaitingQueuePanel waitingQueuePanel = WaitingQueuePanel.getInstance();
         PassengerList[] passengerLists = waitingQueuePanel.getWaitingQueues();
 
-        clearPassengerButton.addActionListener(e -> {
+        clearPassengerButton.addActionListener((e) -> {
             int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to clear all passengers?", "Clear all passengers", JOptionPane.YES_NO_OPTION);
             if (result == JOptionPane.YES_OPTION) {
                 // For all passengers in both waiting queues, generate a log and remove them
