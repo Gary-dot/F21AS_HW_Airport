@@ -34,15 +34,15 @@ public class ProgramGUI extends JFrame {
         summaryPanel.setLayout(new BoxLayout(summaryPanel, BoxLayout.PAGE_AXIS));
         summaryPanel.add(controlPanel);
         summaryPanel.add(eventBoardPanel);
-        // Add controllers to panels
-        new Controllers();
 
         // Add panels to frame
         add(flightDetailsPanel);
         add(summaryPanel);
-
         add(waitingQueuePanel);
         add(deskDetailsPanel);
+
+        // Controllers
+        Controllers.enable();
 
         // Pack and set visible
         pack();
@@ -58,10 +58,5 @@ public class ProgramGUI extends JFrame {
         CenterX = (width - SCREEN_WIDTH) / 2;
         CenterY = (height - SCREEN_HEIGHT) / 2;
         setLocation(CenterX, CenterY);
-    }
-
-    public static void main(String[] args) {
-        Locale.setDefault(Locale.UK);
-        new ProgramGUI();
     }
 }

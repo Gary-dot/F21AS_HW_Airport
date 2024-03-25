@@ -10,13 +10,16 @@ import views.Panels.EventBoardPanel;
 import javax.swing.*;
 
 public class Controllers {
+    public static Controllers instance;
+    public static void enable() {
+        instance = new Controllers();
+    }
     public static boolean isRunning() {
         return running;
     }
-
     private static boolean running = true;
 
-    public Controllers() {
+    private Controllers() {
         // Get some variables from EventBoardPanel
         ControlPanel controlPanel = ControlPanel.getInstance();
         JButton speedButton = controlPanel.getSpeedButton();
