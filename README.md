@@ -6,7 +6,7 @@ The project was completed in 3 sprints.
 
 #### **Sprint 1:**
 
-![image-20240324235042382](C:\Users\24386\AppData\Roaming\Typora\typora-user-images\image-20240324235042382.png)
+![Stage 1](pictures\stage1.png)
 
 1. MVC design pattern was applied to arrange the layout of files.
 
@@ -23,7 +23,7 @@ The project was completed in 3 sprints.
 
 #### **Sprint 2:**
 
-![image-20240324234920912](C:\Users\24386\AppData\Roaming\Typora\typora-user-images\image-20240324234920912.png)
+![Stage 2](pictures\stage2.png)
 
 1. Improve the GUI of the waiting queue and complete the writing of data structures for passengers and waiting queues.
 
@@ -37,7 +37,7 @@ The project was completed in 3 sprints.
 
 #### **Sprint 3:**
 
-![image-20240324235049190](C:\Users\24386\AppData\Roaming\Typora\typora-user-images\image-20240324235049190.png)
+![Stage 3](pictures\stage3.png)
 
 1. The counter function has been implemented, and the specific rules are: when a flight starts ticket checking, a new counter (ticket gate) will be opened, and you can also manually add a counter; When a flight takes off, a counter will be closed, and you can also manually close a counter. When each ticket checkpoint is idle, it will "take" a passenger at the top of the queue from the waiting queue, complete the ticket check after a period of time, and then repeat the operation.
     Tip 1: The important classes involved in this are Desk, DeskList, and DeskDetailsPanel. The Desk class inherits the runnable interface and can be used to start an independent new thread. By the way, the PassengerGenerator is also the same
