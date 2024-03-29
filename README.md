@@ -6,8 +6,6 @@ The project was completed in 3 sprints.
 
 #### **Sprint 1:**
 
-![Stage 1]([pictures/stage1.png · master · 10 / Group Project - Stage 2 · GitLab (hw.ac.uk)](https://gitlab-student.macs.hw.ac.uk/10/group-project-stage-2/-/blob/master/pictures/stage1.png))
-
 1. MVC design pattern was applied to arrange the layout of files.
 
 2. Write a function to read the flight list for subsequent output.
@@ -23,8 +21,6 @@ The project was completed in 3 sprints.
 
 #### **Sprint 2:**
 
-![Stage 2]([pictures/stage2.png · master · 10 / Group Project - Stage 2 · GitLab (hw.ac.uk)](https://gitlab-student.macs.hw.ac.uk/10/group-project-stage-2/-/blob/master/pictures/stage2.png))
-
 1. Improve the GUI of the waiting queue and complete the writing of data structures for passengers and waiting queues.
 
 2. An automatic passenger generator (PassengerGenerator, the single mode adopted) is written, which can generate passengers indefinitely according to the flight currently checking in. The specific rule is that passengers will be given a number according to the generation sequence (here, the object lock of the waiting queue is used to avoid conflicts caused by multiple threads accessing the same piece of data). There are two threads generating passengers simultaneously, namely the instantiation thread of PassengerGenerator, which generates passengers per second based on the current flight being checked. There is also a timer that generates a large number of passengers (about 20) for a new flight at once when it starts checking.
@@ -36,8 +32,6 @@ The project was completed in 3 sprints.
    
 
 #### **Sprint 3:**
-
-![Stage 3]([pictures/stage3.png · master · 10 / Group Project - Stage 2 · GitLab (hw.ac.uk)](https://gitlab-student.macs.hw.ac.uk/10/group-project-stage-2/-/blob/master/pictures/stage3.png))
 
 1. The counter function has been implemented, and the specific rules are: when a flight starts ticket checking, a new counter (ticket gate) will be opened, and you can also manually add a counter; When a flight takes off, a counter will be closed, and you can also manually close a counter. When each ticket checkpoint is idle, it will "take" a passenger at the top of the queue from the waiting queue, complete the ticket check after a period of time, and then repeat the operation.
     Tip 1: The important classes involved in this are Desk, DeskList, and DeskDetailsPanel. The Desk class inherits the runnable interface and can be used to start an independent new thread. By the way, the PassengerGenerator is also the same
