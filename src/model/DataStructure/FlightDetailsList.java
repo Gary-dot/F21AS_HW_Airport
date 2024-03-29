@@ -74,22 +74,18 @@ public class FlightDetailsList implements Subject {
         notifyObservers();
     }
 
+    public void removeFirst() {
+        synchronized (this) {
+            if (!flightDetailsList.isEmpty()) {
+                flightDetailsMap.remove(flightDetailsList.getFirst().getFlightCode());
+                flightDetailsList.removeFirst();
+            }
+        }
+        notifyObservers();
+    }
     public synchronized FlightDetails getByCode(String flightCode) {
         return flightDetailsMap.get(flightCode);
     }
-
-//    public void updateDetails(Passenger p) throws FlightNotFoundException {
-//        synchronized (this){
-//            if (flightDetailsMap.containsKey(p.getFlightCode())) {
-//                FlightDetails fd = flightDetailsMap.get(p.getFlightCode());
-//                fd.addPassenger(p);
-//            } else {
-//                throw new FlightNotFoundException(String.format("Reference code %s: Flight %s not found.", p.getReferenceCode(), p.getFlightCode()));
-//            }
-//        }
-//        notifyObservers();
-//    }
-
     public int size() {
         return flightDetailsList.size();
     }

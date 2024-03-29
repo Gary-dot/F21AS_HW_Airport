@@ -1,6 +1,9 @@
 package model.DataStructure;
 
-public class FlightDetails{
+import interfaces.Observer;
+import interfaces.Subject;
+
+public class FlightDetails implements Subject {
     private final String flightCode;
     private Flight flight;
     private int passengerNumber;
@@ -36,14 +39,31 @@ public class FlightDetails{
         return flightCode;
     }
 
-//    public void addPassenger(Passenger p) {
-//        this.passengerNumber++;
-//        this.totalWeight += p.getBaggage().getWeight();
-//        this.totalVolume += p.getBaggage().getVolume();
-//        this.totalExcessFee += p.getPenalty()[2];
-//    }
+    public synchronized void addPassenger(Passenger p) {
+        this.passengerNumber++;
+        this.totalWeight += p.getBaggage().getWeight();
+        this.totalVolume += p.getBaggage().getVolume();
+        this.totalExcessFee += p.getPenalty()[2];
+        notifyObservers();
+    }
     @Override
     public String toString() {
-        return String.format(" %-22s%-11s%-4.2f%%    %-4.2f%%\n", this.flightCode + "(" + this.flight.getDestination() + ")", this.passengerNumber + "/" + flight.getMaxNumberOfPassengers(), this.totalWeight / flight.getTotalWeightLimit() * 100.0, this.totalVolume / flight.getTotalVolumeLimit() * 100.0);
+        return String.format("  %-22s%-12s%-4.2f%%   %-4.2f%%", this.flightCode + "(" + this.flight.getDestination() + ")", this.passengerNumber + "/" + flight.getMaxNumberOfPassengers(), this.totalWeight / flight.getTotalWeightLimit() * 100.0, this.totalVolume / flight.getTotalVolumeLimit() * 100.0);
+    }
+    private Observer obs;
+
+    @Override
+    public void registerObserver(Observer obs) {
+        this.obs = obs;
+    }
+
+    @Override
+    public void removeObserver(Observer obs) {
+        this.obs = null;
+    }
+
+    @Override
+    public void notifyObservers() {
+        obs.update();
     }
 }
