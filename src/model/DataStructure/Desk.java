@@ -11,6 +11,7 @@ public class Desk implements Runnable, Subject {
     private boolean stop;
     private final int id;
     private boolean isRunning;
+
     private Passenger p;
     private final Object lock = new Object();
 
@@ -116,5 +117,17 @@ public class Desk implements Runnable, Subject {
     @Override
     public void notifyObservers() {
         obs.update();
+    }
+
+    public int getSpeed(){
+        return this.speed;
+    }
+
+    public boolean ifRunning(){
+        return this.isRunning;
+    }
+
+    public boolean ifStop(){
+        return this.stop;
     }
 }
