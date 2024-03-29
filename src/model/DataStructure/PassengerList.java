@@ -2,25 +2,20 @@ package model.DataStructure;
 
 import interfaces.Observer;
 import interfaces.Subject;
-import model.Algorithm.LogGenerator;
 import model.Algorithm.PassengerGenerator;
-import views.Panels.EventBoardPanel;
-import views.ProgramGUI;
+import views.Frames.ProgramGUI;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The passenger list contains all the passengers.
  */
 public class PassengerList implements Subject {
-    private HashMap<String, Passenger> passengers;
-    private ArrayList<Passenger> passengerList;
+    private final ArrayList<Passenger> passengerList;
     private Observer obs;
 
     public PassengerList() {
-        this.passengers = new HashMap<>();
         this.passengerList = new ArrayList<>();
     }
 
@@ -28,24 +23,24 @@ public class PassengerList implements Subject {
         return passengerList;
     }
 
-    public synchronized void add(Passenger p) {
-        if (passengers.get(p.getReferenceCode()) == null) {
-            passengers.put(p.getReferenceCode(), p);
+    public void add(Passenger p) {
+        synchronized (this) {
             passengerList.add(p);
         }
         notifyObservers();
     }
 
-    public synchronized int size() {
+    public int size() {
         return passengerList.size();
     }
 
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        for (Passenger p : passengerList) {
-            sb.append(p.toString());
-            sb.append("\n");
+        synchronized (this) {
+            for (Passenger p : passengerList) {
+                sb.append(p.toString());
+            }
         }
         return sb.toString();
     }
@@ -58,28 +53,33 @@ public class PassengerList implements Subject {
         return passengerList.getLast();
     }
 
-    public synchronized void clear() {
-        passengers.clear();
-        passengerList.clear();
+    public void clear() {
+        synchronized (this) {
+            passengerList.clear();
+        }
         notifyObservers();
     }
 
-    public synchronized Passenger removeFirst() {
-        Passenger p = passengerList.removeFirst();
-        passengers.remove(p.getReferenceCode());
+    public Passenger removeFirst() {
+        Passenger p;
+        synchronized (this) {
+            if (passengerList.isEmpty()) {
+                return null;
+            }
+             p = passengerList.removeFirst();
+        }
         notifyObservers();
         return p;
     }
 
-    public synchronized void addARandomPassenger() {
+    public void addARandomPassenger() {
         Passenger p = PassengerGenerator.generateARandomPassenger(FlightDetailsList.getInstance());
         if (p == null) {
             JOptionPane.showMessageDialog(null, "There is no FLIGHT!", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         p.setIdx(ProgramGUI.getIdx3().getAndIncrement());
-        this.add(p);
-        notifyObservers();
+        add(p);
     }
 
     @Override

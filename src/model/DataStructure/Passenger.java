@@ -82,12 +82,11 @@ public class Passenger {
         }
     }
 
-    public String printPassenger() {
-        return String.format("%-10s %-9s %-10s %s\n", referenceCode, firstName, lastName, baggage.toString());
-    }
-
+    /**
+     * @return A string representation of the object.
+     */
     @Override
     public String toString() {
-        return String.format("%-5d%-15s%-15s%-15s%-10s%-15s%-15d", idx,referenceCode, lastName, firstName, flightCode, baggage.toString(), penalty[2]);
+        return String.format("No.%-5d %-10s %-9s %-10s %s\n", idx, referenceCode, firstName, lastName, baggage.printBaggage());
     }
 }
