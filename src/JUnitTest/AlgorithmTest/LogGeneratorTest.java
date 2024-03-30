@@ -23,7 +23,7 @@ public class LogGeneratorTest {
     void generateLogFileTest() {
         logGenerator.addLog("This is a test log message.");
 
-        // 生成日志文件
+        // generate log file
         logGenerator.generateLogFile();
 
         LocalDateTime now = LocalDateTime.now();

@@ -61,7 +61,7 @@ public class DeskListTest {
         deskList.addDesk(); // add more desks and stop, to see if size changed, to see if thread stopped.
         deskList.stopAll();
 
-        Thread.sleep(100); // 简单延时等待状态更新
+        Thread.sleep(100); // set a delay, waiting for update
 
         //All desks should be stopped.
         // assertTrue(deskList.getArrayList().stream().noneMatch(desk -> desk.ifStop()));
@@ -78,10 +78,12 @@ public class DeskListTest {
     @Test
     void resumeAllTest() throws InterruptedException {
         deskList.addDesk();
+
         deskList.stopAll();
-        Thread.sleep(100); // 确保所有desk已停止
+        Thread.sleep(100); //  set a delay, make sure all threads stops
+
         deskList.resumeAll();
-        Thread.sleep(100); // 简单延时等待状态更新
+        Thread.sleep(100); // set a delay, waiting for update
         // All desks should be resumed.
         assertTrue(deskList.getArrayList().stream().allMatch(desk -> desk.ifRunning()));
     }
