@@ -41,7 +41,7 @@ public class FlightList {
     public static synchronized FlightList getInstance() {
         if (instance == null) {
             instance = new FlightList();
-            readFlightList(instance, ".\\input\\FlightList.txt");
+            readFlightList(instance, ".\\input\\FlightList.csv");
         }
         return instance;
     }

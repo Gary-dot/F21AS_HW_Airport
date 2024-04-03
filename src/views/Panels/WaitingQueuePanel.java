@@ -25,7 +25,7 @@ public class WaitingQueuePanel extends JPanel {
         setBorder(waitingQueueBorder);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        QueuePanel economicClassPanel = new QueuePanel(waitingQueues[0], "Economic Class");
+        QueuePanel economicClassPanel = new QueuePanel(waitingQueues[0], "Economy Class");
         QueuePanel businessClassPanel = new QueuePanel(waitingQueues[1], "Business Class");
         add(economicClassPanel);
         add(businessClassPanel);
