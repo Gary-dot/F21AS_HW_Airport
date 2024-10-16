@@ -1,7 +1,3 @@
-### Project writer: Jiuzhou Zhang
-
-### Project tester: Yukai Wang
-
 To easily run the application in windows, you can either click run.cmd or HW Airport.exe in the directory AirportSystem_jar.
 
 The project was completed in 3 sprints. 
